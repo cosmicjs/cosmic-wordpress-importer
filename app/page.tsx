@@ -1,15 +1,12 @@
+import { Rss } from "lucide-react"
+
+import { Bucket } from "@/types/bucket"
 import { Form } from "@/components/Form"
 
 export default async function IndexPage({
-  params,
   searchParams,
 }: {
-  params: { slug: string }
-  searchParams: {
-    bucket_slug: string
-    read_key: string
-    write_key: string
-  }
+  searchParams: Bucket
 }) {
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -17,10 +14,11 @@ export default async function IndexPage({
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
           Import your WordPress blog posts into Cosmic
         </h1>
-        <p className="max-w-[700px] text-lg text-muted-foreground">
-          Use the form below to add import blog posts from WordPress website
-          that has the RSS feed available.
+        <p className="mb-4 max-w-[700px] text-lg text-muted-foreground">
+          Use the form below to import blog posts from any WordPress RSS feed{" "}
+          <Rss className="inline h-4 w-4" />
         </p>
+        <h3 className="font-bold">What will happen?</h3>
         <p className="max-w-[700px] text-lg text-muted-foreground">
           A new Object type will be added to your Bucket (<code>posts</code>)
           with the correct model to add your posts. **Make sure you do not have
@@ -38,7 +36,11 @@ export default async function IndexPage({
           https://github.blog/feed
         </a>
       </div>
-      <Form bucket={searchParams} />
+      <Form
+        bucket_slug={searchParams.bucket_slug}
+        read_key={searchParams.read_key}
+        write_key={searchParams.write_key}
+      />
     </section>
   )
 }

@@ -63,13 +63,12 @@ export async function POST(request: Request) {
   try {
     await cosmic.objectTypes.insertOne(new_object_type)
   } catch (e) {
-    return NextResponse.json({ message: 'Object type already exists. Remove this Object type from your Bucket, then try again.' }, { status: 400 })
+    return NextResponse.json({ message: 'Looks like you already have a posts Object type. Remove this from your Bucket by going to Posts > Settings before importing your WordPress posts.' }, { status: 400 })
   }
   while (paged <= groups) {
     const feed = await parser.parseURL(url + `?paged=${paged}`)
     const items = feed.items
     for (const item of items) {
-      // console.log(item)
       const title = item.title
       if (item.content) content = item.content
       if (item["content:encoded"]) content = item["content:encoded"]

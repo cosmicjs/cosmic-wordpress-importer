@@ -1,29 +1,67 @@
 "use client"
 
-import { useState } from "react"
+import { FormEvent, useState } from "react"
+import { Loader2 } from "lucide-react"
 
+import { Bucket } from "@/types/bucket"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/components/ui/use-toast"
 
-const handleSubmit = async (e: any, bucket: any, setSubmitting: any) => {
+const handleSubmit = async (
+  e: React.SyntheticEvent,
+  bucket: Bucket,
+  setSubmitting: any,
+  toast: any
+) => {
   e.preventDefault()
   setSubmitting(true)
-  const url = e.target.url.value
-  const limit = e.target.limit.value
-  await fetch("/api", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ url, limit, bucket }),
-  })
+  const target = e.target as typeof e.target & {
+    url: { value: string }
+    limit: { value: string }
+  }
+  const url = target.url.value
+  const limit = target.limit.value
+  try {
+    const res = await fetch("/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url, limit, bucket }),
+    })
+    const data = await res.json()
+    if (res.status === 200) {
+      toast({
+        title: "Posts added!",
+        description:
+          "Go to your Bucket Objects area to see your newly imported posts!",
+      })
+    } else {
+      toast({
+        title: "Oops!",
+        variant: "destructive",
+        description: data.message,
+      })
+    }
+  } catch {
+    toast({
+      title: "Oops!",
+      variant: "destructive",
+      description: "There was an error.",
+    })
+  }
   setSubmitting(false)
 }
 
-export function Form(props: any) {
+export function Form(bucket: Bucket) {
   const [submitting, setSubmitting] = useState(false)
+  const { toast } = useToast()
   return (
-    <form onSubmit={(e: any) => handleSubmit(e, props.bucket, setSubmitting)}>
+    <form
+      onSubmit={(e: FormEvent) => handleSubmit(e, bucket, setSubmitting, toast)}
+    >
       <div style={{ marginBottom: 10 }} className="flex gap-4">
         <div>
           <label>
@@ -51,9 +89,14 @@ export function Form(props: any) {
           </label>
         </div>
       </div>
-      <Button type="submit" className={buttonVariants()}>
-        {submitting ? "Submitting..." : "Submit"}
+      <Button disabled={submitting} type="submit" className={buttonVariants()}>
+        {submitting ? (
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          "Submit"
+        )}
       </Button>
+      <Toaster />
     </form>
   )
 }

@@ -12,7 +12,7 @@ export const siteConfig = {
   ],
   links: {
     twitter: "https://twitter.com/cosmicjs",
-    github: "https://github.com/cosmicjs/cosmic-elements",
+    github: "https://github.com/cosmicjs/cosmic-wordpress-importer",
     docs: "https://www.cosmicjs.com/docs",
   },
 }

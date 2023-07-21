@@ -2,7 +2,7 @@
 
 Import your WordPress posts into Cosmic.
 
-## Insall in Cosmic
+## Install in Cosmic
 
 Log in to Cosmic and go to Your Bucket > Extensions and find this extension to install.
 

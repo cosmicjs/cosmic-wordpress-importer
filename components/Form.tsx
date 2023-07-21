@@ -85,12 +85,13 @@ export function Form(bucket: Bucket) {
           </label>
         </div>
       </div>
-      <Button disabled={submitting} type="submit" className={buttonVariants()}>
-        {submitting ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          "Submit"
-        )}
+      <Button
+        disabled={submitting}
+        type="submit"
+        variant="default"
+        size={submitting ? "icon" : "default"}
+      >
+        {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Submit"}
       </Button>
       <Toaster />
     </form>

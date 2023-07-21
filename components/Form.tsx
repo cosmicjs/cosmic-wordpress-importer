@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, useState } from "react"
+import { FormEvent, useCallback, useState } from "react"
 import { Loader2 } from "lucide-react"
 
 import { Bucket } from "@/types/bucket"
@@ -9,59 +9,55 @@ import { Input } from "@/components/ui/input"
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/components/ui/use-toast"
 
-const handleSubmit = async (
-  e: React.SyntheticEvent,
-  bucket: Bucket,
-  setSubmitting: any,
-  toast: any
-) => {
-  e.preventDefault()
-  setSubmitting(true)
-  const target = e.target as typeof e.target & {
-    url: { value: string }
-    limit: { value: string }
-  }
-  const url = target.url.value
-  const limit = target.limit.value
-  try {
-    const res = await fetch("/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url, limit, bucket }),
-    })
-    const data = await res.json()
-    if (res.status === 200) {
-      toast({
-        title: "Posts added!",
-        description:
-          "Go to your Bucket Objects area to see your newly imported posts!",
-      })
-    } else {
-      toast({
-        title: "Oops!",
-        variant: "destructive",
-        description: data.message,
-      })
-    }
-  } catch {
-    toast({
-      title: "Oops!",
-      variant: "destructive",
-      description: "There was an error.",
-    })
-  }
-  setSubmitting(false)
-}
-
 export function Form(bucket: Bucket) {
   const [submitting, setSubmitting] = useState(false)
   const { toast } = useToast()
+
+  const handleSubmit = useCallback(
+    async (e: React.SyntheticEvent) => {
+      e.preventDefault()
+      setSubmitting(true)
+      const target = e.target as typeof e.target & {
+        url: { value: string }
+        limit: { value: string }
+      }
+      const url = target.url.value
+      const limit = target.limit.value
+      try {
+        const res = await fetch("/api", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url, limit, bucket }),
+        })
+        const data = await res.json()
+        if (res.status === 200) {
+          toast({
+            title: "Posts added!",
+            description:
+              "Go to your Bucket Objects area to see your newly imported posts!",
+          })
+        } else {
+          toast({
+            title: "Oops!",
+            variant: "destructive",
+            description: data.message,
+          })
+        }
+      } catch {
+        toast({
+          title: "Oops!",
+          variant: "destructive",
+          description: "There was an error.",
+        })
+      }
+      setSubmitting(false)
+    },
+    [toast, bucket, setSubmitting]
+  )
   return (
-    <form
-      onSubmit={(e: FormEvent) => handleSubmit(e, bucket, setSubmitting, toast)}
-    >
+    <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
       <div style={{ marginBottom: 10 }} className="flex gap-4">
         <div>
           <label>

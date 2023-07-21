@@ -23,7 +23,7 @@ export default async function IndexPage({
           <p className="max-w-[700px] text-lg text-muted-foreground">
             A new Object type will be added to your Bucket (<code>posts</code>)
             with the correct model to add your posts. Make sure you do not have
-            a Object type with slug `posts` or it will throw an error.
+            an Object type with slug `posts` or it will throw an error.
           </p>
         </div>
         <div className="mb-6">

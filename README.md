@@ -1,22 +1,18 @@
-# next-template
+# WordPress Importer
 
-A Next.js 13 template for building apps with Radix UI and Tailwind CSS.
+Import your WordPress posts into Cosmic.
 
-## Usage
+## Insall in Cosmic
 
-```bash
-npx create-next-app -e https://github.com/shadcn/next-template
+Log in to Cosmic and go to Your Bucket > Extensions and find this extension to install.
+
+## Install locally
+
+You are welcome to contribute / customize this Extension to suite your needs.
+
 ```
-
-## Features
-
-- Next.js 13 App Directory
-- Radix UI Primitives
-- Tailwind CSS
-- Icons from [Lucide](https://lucide.dev)
-- Dark mode with `next-themes`
-- Tailwind CSS class sorting, merging and linting.
-
-## License
-
-Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
+git clone https://github.com/cosmicjs/cosmic-wordpress-importer
+cd cosmic-wordpress-importer
+yarn
+yarn dev
+```

@@ -5,6 +5,8 @@ const parser = new Parser()
 
 export async function POST(request: Request) {
   const res = await request.json()
+  if (!res.bucket.bucket_slug)
+    return NextResponse.json({ message: 'Looks like you are trying to access this extension outside of Cosmic. Log in and install this URL in your Cosmic Bucket to use it.' }, { status: 400 })
   const cosmic = createBucketClient({
     bucketSlug: res.bucket.bucket_slug,
     readKey: res.bucket.read_key,

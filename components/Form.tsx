@@ -23,7 +23,7 @@ const handleSubmit = async (e: any, bucket: any, setSubmitting: any) => {
 export function Form(props: any) {
   const [submitting, setSubmitting] = useState(false)
   return (
-    <form onSubmit={(e) => handleSubmit(e, props.bucket, setSubmitting)}>
+    <form onSubmit={(e: any) => handleSubmit(e, props.bucket, setSubmitting)}>
       <div style={{ marginBottom: 10 }} className="flex gap-4">
         <div>
           <label>

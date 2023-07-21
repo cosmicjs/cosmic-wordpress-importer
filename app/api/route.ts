@@ -74,8 +74,11 @@ export async function POST(request: Request) {
       if (item.content) content = item.content
       if (item["content:encoded"]) content = item["content:encoded"]
       const snippet = item.contentSnippet
-      const published_date = new Date(item.pubDate).toISOString().split("T")[0]
-      const categories = item?.categories.join(", ")
+      const date = item.pubDate;
+      let published_date = '';
+      if (date)
+       published_date = (new Date(date)).toISOString().split("T")[0]
+      const categories = item?.categories?.join(", ")
       const author = item.creator
       const object = {
         title,

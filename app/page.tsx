@@ -33,7 +33,7 @@ export default async function IndexPage({
         .limit(6)
     ).objects
   } catch (e) {
-    console.log(e)
+    // console.log(e) Do nothing
   }
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">

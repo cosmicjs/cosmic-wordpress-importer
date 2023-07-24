@@ -23,6 +23,7 @@ export async function POST(request: Request) {
     emoji: "📰",
     options: {
       slug_field: true,
+      content_editor: false
     },
     metafields: [
       {

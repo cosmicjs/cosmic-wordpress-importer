@@ -48,6 +48,7 @@ export default async function IndexPage({
             />
           </div>
         </div>
+        {/* @ts-expect-error Server Component */}
         <Posts
           bucket_slug={searchParams.bucket_slug}
           read_key={searchParams.read_key}

@@ -8,7 +8,7 @@ Log in to Cosmic and go to Your Bucket > Extensions and find this extension to i
 
 ## Install locally
 
-You are welcome to contribute / customize this Extension to suite your needs.
+You are welcome to contribute / customize this extension to suite your needs.
 
 ```
 git clone https://github.com/cosmicjs/cosmic-wordpress-importer

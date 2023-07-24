@@ -1,6 +1,6 @@
 # WordPress Importer
 
-Import your WordPress posts into Cosmic.
+Import your WordPress posts into Cosmic using and WordPress RSS feed.
 
 ## Install in Cosmic
 

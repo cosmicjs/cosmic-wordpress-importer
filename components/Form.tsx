@@ -4,7 +4,7 @@ import { FormEvent, useCallback, useState } from "react"
 import { Loader2 } from "lucide-react"
 
 import { Bucket } from "@/types/bucket"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/components/ui/use-toast"

@@ -2,6 +2,7 @@ import { Rss } from "lucide-react"
 
 import { Bucket } from "@/types/bucket"
 import { Form } from "@/components/Form"
+import { Posts } from "@/components/Posts"
 
 export default async function IndexPage({
   searchParams,
@@ -19,7 +20,7 @@ export default async function IndexPage({
           <Rss className="inline h-4 w-4" />
         </p>
         <div className="mb-4">
-          <h3 className="font-bold">What will happen?</h3>
+          <h3 className="mb-4 font-bold">What will happen?</h3>
           <p className="max-w-[700px] text-lg text-muted-foreground">
             A new Object type will be added to your Bucket (<code>posts</code>)
             with the correct model to add your posts. Make sure you do not have
@@ -27,7 +28,7 @@ export default async function IndexPage({
           </p>
         </div>
         <div className="mb-6">
-          <h3 className="font-bold">Import posts</h3>
+          <h3 className="mb-4 font-bold">Import posts</h3>
           <div className="mb-4">
             Try{" "}
             <a
@@ -47,6 +48,10 @@ export default async function IndexPage({
             />
           </div>
         </div>
+        <Posts
+          bucket_slug={searchParams.bucket_slug}
+          read_key={searchParams.read_key}
+        />
         <div className="mb-6">
           <h3 className="font-bold">Support</h3>
           <p className="max-w-[700px] text-lg text-muted-foreground">

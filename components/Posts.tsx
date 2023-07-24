@@ -1,11 +1,9 @@
 import { createBucketClient } from "@cosmicjs/sdk"
 
 import { Bucket } from "@/types/bucket"
+import { PostProps } from "@/types/post"
+import Card from "@/components/Elements/card"
 
-type Post = {
-  id: string
-  title: string
-}
 export async function Posts(bucket: Bucket) {
   const cosmic = createBucketClient({
     bucketSlug: bucket.bucket_slug,
@@ -19,8 +17,15 @@ export async function Posts(bucket: Bucket) {
         .find({
           type: "posts",
         })
-        .props(["id", "title"])
-        .limit(5)
+        .props([
+          "id",
+          "title",
+          "metadata.author",
+          "metadata.snippet",
+          "metadata.published_date",
+          "metadata.categories",
+        ])
+        .limit(6)
     ).objects
   } catch (e) {
     console.log(e)
@@ -30,28 +35,29 @@ export async function Posts(bucket: Bucket) {
       <h3 className="mb-4 font-bold">Posts</h3>
       <div className="mb-6">
         {!posts && <>No posts yet.</>}
-        {posts &&
-          posts?.map((post: Post) => {
-            return (
-              <div className="mb-4" key={post.id}>
-                <a
-                  href={`https://app.cosmicjs.com/${bucket.bucket_slug}/objects/${post.id}`}
-                  className="text-blue-700"
-                >
-                  {post.title}
-                </a>
-              </div>
-            )
-          })}
         {posts && (
-          <div>
-            <a
-              href={`https://app.cosmicjs.com/${bucket.bucket_slug}/objects?query={"type":"posts"}`}
-              className="text-blue-700"
-            >
-              View more &rarr;
-            </a>
-          </div>
+          <>
+            <div className="mb-4 grid grid-cols-3 gap-4">
+              {posts?.map((post: PostProps) => {
+                return (
+                  <a
+                    href={`https://app.cosmicjs.com/${bucket.bucket_slug}/objects/${post.id}`}
+                    key={post.id}
+                  >
+                    <Card data={post} />
+                  </a>
+                )
+              })}
+            </div>
+            <div>
+              <a
+                href={`https://app.cosmicjs.com/${bucket.bucket_slug}/objects?query={"type":"posts"}`}
+                className="text-blue-700"
+              >
+                View more &rarr;
+              </a>
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -66,6 +66,7 @@ export default async function IndexPage({
           </>
         ) : (
           <div className="mt-4">
+            {/* @ts-expect-error Server Component */}
             <Posts posts={posts} bucket_slug={searchParams.bucket_slug} />
           </div>
         )}

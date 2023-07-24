@@ -11,6 +11,7 @@ import { useToast } from "@/components/ui/use-toast"
 
 export function Form(bucket: Bucket) {
   const [submitting, setSubmitting] = useState(false)
+  const [success, setSuccess] = useState(false)
   const { toast } = useToast()
 
   const handleSubmit = useCallback(
@@ -38,6 +39,7 @@ export function Form(bucket: Bucket) {
             description:
               "Go to your Bucket Objects area to see your newly imported posts!",
           })
+          setSuccess(true)
         } else {
           toast({
             title: "Oops!",
@@ -54,46 +56,74 @@ export function Form(bucket: Bucket) {
       }
       setSubmitting(false)
     },
-    [toast, bucket, setSubmitting]
+    [toast, bucket, setSubmitting, setSuccess]
   )
   return (
-    <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
-      <div style={{ marginBottom: 10 }} className="flex gap-4">
+    <>
+      {!success ? (
+        <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+          <h3 className="mb-4 font-bold">Import posts</h3>
+          <div className="mb-4">
+            Try{" "}
+            <a
+              href="https://github.blog/feed"
+              target="_blank"
+              className="text-blue-600"
+              rel="noreferrer"
+            >
+              https://github.blog/feed
+            </a>
+          </div>
+          <div style={{ marginBottom: 10 }} className="flex gap-4">
+            <div>
+              <label>
+                Feed URL
+                <Input
+                  className="w-[300px]"
+                  type="text"
+                  name="url"
+                  placeholder="Enter WordPress RSS feed URL"
+                  defaultValue="https://github.blog/feed"
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Number of posts (max 100)
+                <Input
+                  className="w-[150px]"
+                  type="number"
+                  name="limit"
+                  placeholder="Number of posts"
+                  defaultValue="10"
+                  max={100}
+                />
+              </label>
+            </div>
+          </div>
+          <Button
+            disabled={submitting}
+            type="submit"
+            variant="default"
+            size={submitting ? "icon" : "default"}
+          >
+            {submitting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
+        </form>
+      ) : (
         <div>
-          <label>
-            Feed URL
-            <Input
-              className="w-[300px]"
-              type="text"
-              name="url"
-              placeholder="Enter WordPress RSS feed URL"
-              defaultValue="https://github.blog/feed"
-            />
-          </label>
+          Success!{" "}
+          <a href="" className="text-blue-600">
+            Reload this page
+          </a>{" "}
+          to see your posts.
         </div>
-        <div>
-          <label>
-            Number of posts (max 100)
-            <Input
-              className="w-[150px]"
-              type="number"
-              name="limit"
-              placeholder="Number of posts"
-              defaultValue="10"
-              max={100}
-            />
-          </label>
-        </div>
-      </div>
-      <Button
-        disabled={submitting}
-        type="submit"
-        variant="default"
-        size={submitting ? "icon" : "default"}
-      >
-        {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Submit"}
-      </Button>
+      )}
       <Toaster />
-    </form>
+    </>
   )
 }

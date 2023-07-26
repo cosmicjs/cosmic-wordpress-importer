@@ -14,7 +14,7 @@ export async function Posts({
       <p className="mb-4">
         You have successfully imported your posts. To import again, go to{" "}
         <a
-          href={`https://app.cosmicjs.com/${bucket_slug}/object-types/posts`}
+          href={`https://app.cosmicjs.com/${bucket_slug}/object-types/wp-posts`}
           target="_parent"
           className="text-blue-600"
         >
@@ -41,7 +41,7 @@ export async function Posts({
             </div>
             <div>
               <a
-                href={`https://app.cosmicjs.com/${bucket_slug}/objects?query={"type":"posts"}`}
+                href={`https://app.cosmicjs.com/${bucket_slug}/objects?query={"type":"wp-posts"}`}
                 className="text-blue-700"
               >
                 View more &rarr;

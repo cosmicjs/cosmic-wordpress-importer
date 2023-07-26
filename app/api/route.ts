@@ -20,6 +20,7 @@ export async function POST(request: Request) {
   let content
   const new_object_type = {
     title: "Posts",
+    slug: "wp-posts",
     emoji: "📰",
     options: {
       slug_field: true,
@@ -66,7 +67,7 @@ export async function POST(request: Request) {
   try {
     await cosmic.objectTypes.insertOne(new_object_type)
   } catch (e) {
-    return NextResponse.json({ message: 'Looks like you already have a posts Object type. Remove this from your Bucket by going to Posts > Settings before importing your WordPress posts.' }, { status: 400 })
+    return NextResponse.json({ message: 'Looks like you already have a wp-posts Object type. Remove this from your Bucket by going to Posts > Settings before importing your WordPress posts.' }, { status: 400 })
   }
   while (paged <= groups) {
     const feed = await parser.parseURL(url + `?paged=${paged}`)
@@ -84,7 +85,7 @@ export async function POST(request: Request) {
       const author = item.creator
       const object = {
         title,
-        type: "posts",
+        type: "wp-posts",
         metadata: {
           content,
           snippet,

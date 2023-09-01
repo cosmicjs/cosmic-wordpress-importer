@@ -43,6 +43,7 @@ export async function Posts({
               <a
                 href={`https://app.cosmicjs.com/${bucket_slug}/objects?query={"type":"wp-posts"}`}
                 className="text-blue-700"
+                target="_parent"
               >
                 View more &rarr;
               </a>
